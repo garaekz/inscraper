@@ -1,6 +1,6 @@
 {
   "name": "inscraper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A playwright based scraper for linked in profiles (for now)",
   "main": "dist/main.js",
   "author": "David Garay",
