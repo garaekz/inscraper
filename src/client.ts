@@ -1,10 +1,8 @@
 import { Browser, BrowserContext } from "playwright";
 import { Cookie } from "playwright-core";
-import { chromium } from "playwright-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { chromium } from "playwright";
 import * as cheerio from "cheerio";
 import { Profile } from "./types";
-chromium.use(StealthPlugin());
 
 export class Client {
   private browser: Browser;

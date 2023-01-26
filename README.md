@@ -61,7 +61,7 @@ await client.close()
 This library uses Playwright, which is compatible with Chromium, Firefox and Webkit. For this implementation, Chromium is being used.
 
 ## Dependencies
-This library depends on playwright, playwright-extra, puppeteer-extra-plugin-stealth and cheerio.
+This library depends on playwright and cheerio.
 
 ## Contributions
 Your contributions are always welcome! Please feel free to submit a pull request or open an issue.

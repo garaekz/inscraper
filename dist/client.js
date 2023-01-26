@@ -22,15 +22,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createClient = exports.Client = void 0;
-const playwright_extra_1 = require("playwright-extra");
-const puppeteer_extra_plugin_stealth_1 = __importDefault(require("puppeteer-extra-plugin-stealth"));
+const playwright_1 = require("playwright");
 const cheerio = __importStar(require("cheerio"));
-playwright_extra_1.chromium.use((0, puppeteer_extra_plugin_stealth_1.default)());
 class Client {
     browser;
     context;
@@ -95,7 +90,7 @@ const createClient = async (cookieString) => {
         secure: true,
         sameSite: "None",
     };
-    const browser = await playwright_extra_1.chromium.launch();
+    const browser = await playwright_1.chromium.launch();
     const context = await browser.newContext();
     await context.addCookies([cookie]);
     return new Client(browser, context);
