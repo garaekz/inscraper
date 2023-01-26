@@ -2,13 +2,13 @@
   "name": "inscraper",
   "version": "1.0.1",
   "description": "A playwright based scraper for linked in profiles (for now)",
-  "main": "main.ts",
+  "main": "dist/main.js",
   "author": "David Garay",
   "license": "MIT",
   "private": false,
   "scripts": {
     "start": "nodemon --watch src --exec \"ts-node\" src/main.ts",
-    "build": "tsc",
+    "build": "tsc --declaration",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
