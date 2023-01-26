@@ -1,9 +1,9 @@
 {
   "name": "inscraper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A playwright based scraper for linked in profiles (for now)",
   "main": "dist/main.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/main.d.ts",
   "author": "David Garay",
   "license": "MIT",
   "private": false,
