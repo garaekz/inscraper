@@ -1,10 +1,10 @@
-import { Browser, BrowserContext } from 'playwright';
-import { Cookie } from 'playwright-core';
-import { chromium } from 'playwright-extra'
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
-import * as cheerio from 'cheerio';
-import { Profile } from './types';
-chromium.use(StealthPlugin())
+import { Browser, BrowserContext } from "playwright";
+import { Cookie } from "playwright-core";
+import { chromium } from "playwright-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import * as cheerio from "cheerio";
+import { Profile } from "./types";
+chromium.use(StealthPlugin());
 
 export class Client {
   private browser: Browser;
@@ -27,46 +27,63 @@ export class Client {
     return this.browser;
   }
 
-  async getProfile(vanityName: string): Promise<Profile> {
+  async getProfile(profileSlug: string): Promise<Profile> {
     const page = await this.context.newPage();
-    await page.goto(`https://www.linkedin.com/in/${vanityName}`, { waitUntil: 'load' });
+    await page.goto(`https://www.linkedin.com/in/${profileSlug}`, {
+      waitUntil: "load",
+    });
     const html = await page.content();
-    if (html.includes('auth_wall_desktop_profile')) {
-      throw new Error('Cookies error');
+    if (html.includes("auth_wall_desktop_profile")) {
+      throw new Error("Cookies error");
     }
     await page.close();
     const $ = cheerio.load(html);
     return {
-      name:  $('main section:nth-child(1) h1').text(),
-      headline: $('main section:nth-child(1) .text-body-medium.break-words').text().trim(),
-      about: $('section > #about ~ div.display-flex.ph5.pv3 span[aria-hidden=true]').text(),
-      experience: $('section > #experience ~ .pvs-list__outer-container ul ul ul li span[aria-hidden=true]').toArray().map((item) => $(item).text()),
+      name: $("main section:nth-child(1) h1").text(),
+      headline: $("main section:nth-child(1) .text-body-medium.break-words")
+        .text()
+        .trim(),
+      about: $(
+        "section > #about ~ div.display-flex.ph5.pv3 span[aria-hidden=true]"
+      ).text(),
+      experience: $(
+        "section > #experience ~ .pvs-list__outer-container ul ul ul li span[aria-hidden=true]"
+      )
+        .toArray()
+        .map((item) => $(item).text()),
     };
   }
 
-  async getExperience(vanityName: string): Promise<string[]> {
+  async getExperience(profileSlug: string): Promise<string[]> {
     const page = await this.context.newPage();
-    await page.goto(`https://www.linkedin.com/in/${vanityName}/details/experience/`, { waitUntil: 'domcontentloaded' });
+    await page.goto(
+      `https://www.linkedin.com/in/${profileSlug}/details/experience/`,
+      { waitUntil: "domcontentloaded" }
+    );
     const html = await page.content();
-    if (html.includes('auth_wall_desktop_profile')) {
-      throw new Error('Cookies error');
+    if (html.includes("auth_wall_desktop_profile")) {
+      throw new Error("Cookies error");
     }
     await page.close();
     const $ = cheerio.load(html);
-    return $('section > #experience ~ .pvs-list__outer-container ul ul ul li span[aria-hidden=true]').toArray().map((item) => $(item).text());
+    return $(
+      "section > #experience ~ .pvs-list__outer-container ul ul ul li span[aria-hidden=true]"
+    )
+      .toArray()
+      .map((item) => $(item).text());
   }
 }
 
 export const createClient = async (cookieString: string): Promise<Client> => {
   const cookie: Cookie = {
-    name: 'li_at',
+    name: "li_at",
     value: cookieString,
-    domain: '.www.linkedin.com',
-    path: '/',
+    domain: ".www.linkedin.com",
+    path: "/",
     expires: -1,
     httpOnly: false,
     secure: true,
-    sameSite: 'None',
+    sameSite: "None",
   };
 
   const browser = await chromium.launch();
@@ -74,4 +91,4 @@ export const createClient = async (cookieString: string): Promise<Client> => {
   await context.addCookies([cookie]);
 
   return new Client(browser, context);
-}
+};
