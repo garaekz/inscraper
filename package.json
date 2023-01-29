@@ -1,5 +1,5 @@
 {
-  "name": "@garaekz/inscraper",
+  "name": "inscraper",
   "version": "1.2.7",
   "description": "A playwright based scraper for linked in profiles (for now)",
   "main": "dist/main.js",
