@@ -1,18 +1,12 @@
-/// <reference types="node" />
 import { Browser, BrowserContext } from "playwright";
-import { Profile } from "./types";
+import { JobExperience, Profile } from "./types";
 export declare class Client {
-    private browser;
-    private context;
-    private page;
-    private slug;
+    #private;
+    context: BrowserContext;
+    slug: string | null;
     constructor(browser: Browser, context: BrowserContext);
     close(): Promise<void>;
-    getContext(): BrowserContext;
-    getBrowser(): Browser;
-    setPage(url?: string): Promise<void>;
-    getProfile(profileSlug?: string): Promise<Profile>;
-    getScreenshot(profileSlug?: string): Promise<Buffer>;
-    private getExperience;
+    getProfile(slug?: string): Promise<Profile>;
+    getExperience(slug?: string): Promise<JobExperience>;
 }
 export declare const createClient: (cookieString: string) => Promise<Client>;

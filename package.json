@@ -1,6 +1,6 @@
 {
   "name": "inscraper",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A playwright based scraper for linked in profiles (for now)",
   "main": "dist/main.js",
   "types": "dist/types/main.d.ts",
@@ -10,11 +10,11 @@
   "scripts": {
     "start": "nodemon --watch src --exec \"ts-node\" src/main.ts",
     "build": "tsc --declaration",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "nodemon local/main.ts"
   },
   "dependencies": {
     "@types/node": "^18.11.18",
-    "cheerio": "^1.0.0-rc.12",
     "nodemon": "^2.0.20",
     "playwright": "^1.30.0"
   },
