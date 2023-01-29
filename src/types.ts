@@ -1,3 +1,5 @@
+import { PageScreenshotOptions } from "playwright";
+
 export interface Experience {
   title: string;
   company: string;
@@ -11,4 +13,10 @@ export interface Profile {
   headline: string;
   about: string;
   experience: Experience[];
+  getScreenshot: (options?: PageScreenshotOptions) => Promise<Buffer>;
+}
+
+export interface JobExperience {
+  experience: Experience[];
+  getScreenshot: (options?: PageScreenshotOptions) => Promise<Buffer>;
 }
