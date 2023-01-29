@@ -12,7 +12,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: if [ -e yarn.lock ]; then
+      - run: |
+          if [ -e yarn.lock ]; then
           yarn install --frozen-lockfile
           elif [ -e package-lock.json ]; then
           npm ci
