@@ -1,11 +1,29 @@
 {
-  "name": "inscraper",
-  "version": "1.2.1",
+  "name": "@garaekz/inscraper",
+  "version": "1.2.2",
   "description": "A playwright based scraper for linked in profiles (for now)",
   "main": "dist/main.js",
   "types": "dist/types/main.d.ts",
   "author": "David Garay",
-  "repository": "https://github.com/garaekz/inscraper.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garaekz/inscraper.git"
+  },
+  "keywords": [
+    "inscraper",
+    "linkedin",
+    "scraper",
+    "playwright",
+    "scraping",
+    "linkedin-scraper",
+    "linkedin-scrapper",
+    "linkedin-scrapping",
+    "linkedin-scrapping",
+    "linkedin-scraper",
+    "linkedin-scrapper",
+    "linkedin-scrapping",
+    "linkedin-scrapping"
+  ],
   "license": "MIT",
   "private": false,
   "scripts": {
