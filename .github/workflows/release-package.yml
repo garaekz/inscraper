@@ -19,6 +19,7 @@ jobs:
           npm ci
           else
           npm i
+          fi
           
       - run: npm test
 
