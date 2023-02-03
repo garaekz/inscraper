@@ -1,4 +1,7 @@
-import { createClient } from './client';
+import { VoyagerClient } from './clients/voyager.client';
 
-export { createClient }
 export * from './types';
+
+export const createClient = async (cookieString: string): Promise<VoyagerClient> => {
+  return new VoyagerClient(cookieString);
+};

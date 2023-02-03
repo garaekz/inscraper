@@ -15,7 +15,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createClient = void 0;
-const client_1 = require("./client");
-Object.defineProperty(exports, "createClient", { enumerable: true, get: function () { return client_1.createClient; } });
+const voyager_client_1 = require("./clients/voyager.client");
 __exportStar(require("./types"), exports);
+const createClient = async (cookieString) => {
+    return new voyager_client_1.VoyagerClient(cookieString);
+};
+exports.createClient = createClient;
 //# sourceMappingURL=main.js.map
