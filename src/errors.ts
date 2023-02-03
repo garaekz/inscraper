@@ -4,3 +4,10 @@ export class CookiesError extends Error {
     this.name = "CookiesError";
   }
 }
+
+export class PageNotFound extends Error {
+  constructor(message = "The page you requested was not found") {
+    super(message);
+    this.name = "PageNotFound";
+  }
+}

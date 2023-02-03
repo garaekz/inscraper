@@ -1,20 +1,32 @@
-/// <reference types="node" />
-import { PageScreenshotOptions } from "playwright";
 export interface Experience {
-    title: string;
+    title?: string;
     company: string;
-    date: string;
-    location: string | null;
+    location?: string;
+    tenure?: string;
+    positions?: {
+        title: string;
+        tenure: string;
+        description: string;
+    }[];
+    description?: string;
+}
+export interface Education {
+    school: string;
+    degree: string;
+    fieldOfStudy: string;
+    startDate: string;
+    endDate: string;
     description: string | null;
 }
 export interface Profile {
     name: string;
     headline: string;
-    about: string;
+    location: string | null;
+    profileUrl: string;
+    profilePicture: string;
+    summary: string;
     experience: Experience[];
-    getScreenshot: (options?: PageScreenshotOptions) => Promise<Buffer>;
+    education: Education[];
+    skills: string[];
 }
-export interface JobExperience {
-    experience: Experience[];
-    getScreenshot: (options?: PageScreenshotOptions) => Promise<Buffer>;
-}
+export type GetProfileOptions = 'full' | 'experience' | 'education' | 'skills' | undefined;
