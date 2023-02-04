@@ -41,7 +41,7 @@ class VoyagerClient {
         const summary = profileData.summary;
         let experience = [];
         if (mode === 'full' || mode === 'experience') {
-            experience = await this.getExperience(urn);
+            experience = await this.#getExperience(urn);
         }
         else {
             experience = data.included
@@ -67,7 +67,7 @@ class VoyagerClient {
         };
         return profile;
     }
-    async getExperience(urn) {
+    async #getExperience(urn) {
         const url = `https://www.linkedin.com/voyager/api/graphql?variables=(profileUrn:${encodeURIComponent(urn)},sectionType:experience)&&queryId=voyagerIdentityDashProfileComponents.8f78e9eb2da12e72fba436b33455eae3`;
         const response = await fetch(url, {
             method: 'GET',
@@ -79,7 +79,7 @@ class VoyagerClient {
         }
         const data = await response.json();
         const subExperience = data.included.find((item) => item.decorationType === 'NONE');
-        const experience = data.included.find((item) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item) => this.#mapFullExperience(item, subExperience));
+        const experience = data.included.find((item) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item) => this.#mapFullExperience(item, subExperience)).flat();
         console.log(experience);
         return experience;
     }
@@ -99,23 +99,18 @@ class VoyagerClient {
         if (!base.metadata && sub) {
             const originLink = base.textActionTarget;
             const matching = sub.components.elements.filter((item) => item.components.entityComponent.textActionTarget === originLink);
-            const title = base.title.text;
+            const company = base.title.text;
             const location = base.caption.text;
-            const tenure = base.subtitle.text;
-            const positions = matching.map((item) => {
+            return matching.map((item) => {
                 const base = item.components.entityComponent;
                 return {
                     title: base.title.text,
                     tenure: base.caption.text,
+                    company,
+                    location,
                     description: base.subComponents.components[0].components.fixedListComponent.components[0].components.textComponent.text.text
                 };
             });
-            return {
-                title,
-                location,
-                tenure,
-                positions
-            };
         }
         const title = base.title.text;
         const tenure = base.caption.text;
