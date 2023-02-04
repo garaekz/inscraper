@@ -11,7 +11,8 @@ class VoyagerClient {
         const token = (0, tokengen_util_1.generateToken)();
         this.#headers = new Headers();
         this.#headers.append("accept", " application/vnd.linkedin.normalized+json+2.1");
-        this.#headers.append("accept-encoding", " gzip, deflate, br");
+        // TODO: Figure out gzip issue not decompressing
+        // this.#headers.append("accept-encoding", " gzip, deflate, br");
         this.#headers.append("cookie", `li_at=${cookie}; JSESSIONID=\"ajax:${token}\";`);
         this.#headers.append("csrf-token", `ajax:${token}`);
         this.#slug = null;
@@ -80,7 +81,6 @@ class VoyagerClient {
         const data = await response.json();
         const subExperience = data.included.find((item) => item.decorationType === 'NONE');
         const experience = data.included.find((item) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item) => this.#mapFullExperience(item, subExperience)).flat();
-        console.log(experience);
         return experience;
     }
     #mapExperience(item) {

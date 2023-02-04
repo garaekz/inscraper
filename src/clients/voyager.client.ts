@@ -1,7 +1,5 @@
-import { PageScreenshotOptions } from "playwright";
 import { Education, Experience, GetProfileOptions, Profile } from "../types";
 import { generateToken } from "../utils/tokengen.util";
-import { createPlaywrightClient, PlaywrightClient } from "./playwright.client";
 
 export class VoyagerClient {
   #cookie: string;
@@ -13,7 +11,8 @@ export class VoyagerClient {
     const token = generateToken();
     this.#headers = new Headers();
     this.#headers.append("accept", " application/vnd.linkedin.normalized+json+2.1");
-    this.#headers.append("accept-encoding", " gzip, deflate, br");
+    // TODO: Figure out gzip issue not decompressing
+    // this.#headers.append("accept-encoding", " gzip, deflate, br");
     this.#headers.append("cookie", `li_at=${cookie}; JSESSIONID=\"ajax:${token}\";`);
     this.#headers.append("csrf-token", `ajax:${token}`);
     this.#slug = null;
@@ -91,7 +90,6 @@ export class VoyagerClient {
     const data = await response.json();
     const subExperience = data.included.find((item: any) => item.decorationType === 'NONE');
     const experience = data.included.find((item: any) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item: any) => this.#mapFullExperience(item, subExperience)).flat();
-    console.log(experience);
     
     return experience;
   }

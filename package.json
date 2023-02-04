@@ -1,6 +1,6 @@
 {
   "name": "@garaekz/inscraper",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A LinkedIn voyager wrapper for scraping data from LinkedIn profiles. We'll be using Playwright as a fallback and for some other functionalities.",
   "main": "dist/main.js",
   "types": "dist/types/main.d.ts",
