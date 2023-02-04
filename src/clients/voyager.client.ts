@@ -90,7 +90,7 @@ export class VoyagerClient {
     }
     const data = await response.json();
     const subExperience = data.included.find((item: any) => item.decorationType === 'NONE');
-    const experience = data.included.find((item: any) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item: any) => this.#mapFullExperience(item, subExperience));
+    const experience = data.included.find((item: any) => item.decorationType === 'LINE_SEPARATED').components.elements.map((item: any) => this.#mapFullExperience(item, subExperience)).flat();
     console.log(experience);
     
     return experience;
@@ -110,30 +110,25 @@ export class VoyagerClient {
     }
   }
 
-  #mapFullExperience(item: any, sub?: any): Experience {
+  #mapFullExperience(item: any, sub?: any): Experience | Experience[] {
     const base = item.components.entityComponent;
     if (!base.metadata && sub) {
       const originLink = base.textActionTarget;
       const matching = sub.components.elements.filter((item: any) => item.components.entityComponent.textActionTarget === originLink);
       
-      const title = base.title.text;
+      const company = base.title.text;
       const location = base.caption.text;
-      const tenure = base.subtitle.text;
-      const positions = matching.map((item: any) => {
+      
+      return matching.map((item: any) => {
         const base = item.components.entityComponent;
         return {
           title: base.title.text,
           tenure: base.caption.text,
+          company,
+          location,
           description: base.subComponents.components[0].components.fixedListComponent.components[0].components.textComponent.text.text
         }
       });
-      
-      return {
-        title,
-        location,
-        tenure,
-        positions
-      } as Experience;
     }
     
     const title = base.title.text;

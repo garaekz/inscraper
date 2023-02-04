@@ -1,15 +1,10 @@
 import { PageScreenshotOptions } from "playwright";
 
 export interface Experience {
-  title?: string;
+  title: string;
   company: string;
   location?: string;
   tenure?: string;
-  positions?: {
-    title: string;
-    tenure: string;
-    description: string;
-  }[];
   description?: string;
 }
 
