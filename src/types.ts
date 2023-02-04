@@ -12,8 +12,8 @@ export interface Education {
   school: string;
   degree: string;
   fieldOfStudy: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   description: string | null;
 }
 

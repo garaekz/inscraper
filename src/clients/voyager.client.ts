@@ -40,7 +40,8 @@ export class VoyagerClient {
     const name = `${profileData.firstName} ${profileData.lastName}`;
     const headline = profileData.headline;
     const location = profileData.locationName;
-    const profilePicture = profileData.pictureRootUrl;
+    const profilePictureBase = profileData.profilePicture.displayImageReference.vectorImage;
+    const profilePicture = `${profilePictureBase.rootUrl}${profilePictureBase.artifacts[profilePictureBase.artifacts.length - 1].fileIdentifyingUrlPathSegment}`;
     const profileUrl = profileData.publicIdentifier;
     const summary = profileData.summary;
     
@@ -143,15 +144,17 @@ export class VoyagerClient {
   }
 
   #mapEducation(item: any): Education {
-    const startDate = this.#getDateString(item.dateRange.start);
-    const endDate = this.#getDateString(item.dateRange.end) || 'Present';
-
+    let startDate, endDate;
+    if (item.dateRange) {
+      startDate = this.#getDateString(item.dateRange.start);
+      endDate = this.#getDateString(item.dateRange.end) || 'Present';
+    }
     return {
       school: item.schoolName,
       degree: item.degreeName,
       fieldOfStudy: item.fieldOfStudy,
-      startDate,
-      endDate,
+      startDate: startDate || null,
+      endDate: endDate || null,
       description: item.description
     }
   }
