@@ -97,6 +97,8 @@ class VoyagerClient {
     }
     #mapFullExperience(item, sub) {
         const base = item.components.entityComponent;
+        if (!base)
+            return [];
         if (!base.metadata && sub) {
             const originLink = base.textActionTarget;
             const matching = sub.components.elements.filter((item) => item.components.entityComponent.textActionTarget === originLink);
