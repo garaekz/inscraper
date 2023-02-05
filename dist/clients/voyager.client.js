@@ -37,8 +37,11 @@ class VoyagerClient {
         const name = `${profileData.firstName} ${profileData.lastName}`;
         const headline = profileData.headline;
         const location = profileData.locationName;
-        const profilePictureBase = profileData.profilePicture.displayImageReference.vectorImage;
-        const profilePicture = `${profilePictureBase.rootUrl}${profilePictureBase.artifacts[profilePictureBase.artifacts.length - 1].fileIdentifyingUrlPathSegment}`;
+        let profilePicture = null;
+        if (profileData.profilePicture) {
+            const profilePictureBase = profileData.profilePicture.displayImageReference.vectorImage;
+            profilePicture = `${profilePictureBase.rootUrl}${profilePictureBase.artifacts[profilePictureBase.artifacts.length - 1].fileIdentifyingUrlPathSegment}`;
+        }
         const profileUrl = profileData.publicIdentifier;
         const summary = profileData.summary;
         let experience = [];
@@ -103,7 +106,7 @@ class VoyagerClient {
             const originLink = base.textActionTarget;
             const matching = sub.components.elements.filter((item) => item.components.entityComponent.textActionTarget === originLink);
             const company = base.title.text;
-            const location = base.caption.text;
+            const location = base.caption ? base.caption.text : null;
             return matching.map((item) => {
                 const base = item.components.entityComponent;
                 return {

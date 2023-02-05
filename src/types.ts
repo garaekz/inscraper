@@ -22,7 +22,7 @@ export interface Profile {
   headline: string;
   location: string | null;
   profileUrl: string;
-  profilePicture: string;
+  profilePicture: string | null;
   summary: string;
   experience: Experience[];
   education: Education[];
